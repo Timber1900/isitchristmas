@@ -1,11 +1,53 @@
+import { useEffect, useState } from 'react'
+
 export default function Home() {
+  const [isChristmas, setIsChristmas] = useState<boolean | null>(null)
+  const [timeMissing, setTimeMissing] = useState<string | null>(null)
+
+  useEffect(() => {
+    const date = new Date()
+    const month = date.getMonth()
+    const day = date.getDate()
+
+    if(month === 11 && day === 25) {
+      setIsChristmas(true)
+    } else {
+      setIsChristmas(false)
+    }
+
+    const animation = () => {
+      const timeMissing = getTimeMissing()
+      setTimeMissing(timeMissing);
+
+      requestAnimationFrame(animation)
+    }
+    requestAnimationFrame(animation)
+  }, [])
+
+  const getTimeMissing = () => {
+    const date = new Date()
+    const christmasDate = new Date(date.getFullYear(), 11, 25, 0, 0, 0, 0);
+    let timeDiff = christmasDate.getTime() - date.getTime();
+    if(timeDiff < 0) {
+      timeDiff+= 86400000;
+    }
+    const months = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30));
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) - months * 30;
+    const hours = Math.floor(timeDiff / (1000 * 60 * 60)) - months * 30 * 24 - days * 24;
+    const minutes = Math.floor(timeDiff / (1000 * 60)) - months * 30 * 24 * 60 - days * 24 * 60 - hours * 60;
+    const seconds = Math.floor(timeDiff / 1000) - months * 30 * 24 * 60 * 60 - days * 24 * 60 * 60 - hours * 60 * 60 - minutes * 60;
+
+    if(days === 0) {
+      return "It's Christmas!! 🎉🎉🎉"
+    }
+
+    return `${months} months, ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`
+  }
+
   return (
-    <div className="container flex items-center p-4 mx-auto min-h-screen justify-center">
-      <main>
-        <h1 className="font-mono text-xl code">
-          Welcome to <span className="text-purple-700">Nextjs</span>, <span className="text-indigo-700">TailwindCSS</span> and <span className="text-gray-700">TypeScript</span>
-        </h1>
-      </main>
-    </div>
+    <main className="grid w-screen h-screen bg-red-600 place-content-center">
+        <h1 className="font-sans font-bold text-center text-white text-9xl w-max ">{isChristmas ? 'Yes!' : 'No.'}</h1>
+        <p className="font-sans text-3xl font-bold text-center text-white w-max">{timeMissing}</p>
+    </main>
   )
 }

@@ -46,8 +46,8 @@ export default function Home() {
 
   return (
     <main className="grid w-screen h-screen bg-red-600 place-content-center">
-        <h1 className="font-sans font-bold text-center text-white text-9xl w-max ">{isChristmas ? 'Yes!' : 'No.'}</h1>
-        <p className="font-sans text-3xl font-bold text-center text-white w-max">{timeMissing}</p>
+        <h1 className="w-screen font-sans text-3xl font-bold text-center text-white sm:text-9xl">{isChristmas ? 'Yes!' : 'No.'}</h1>
+        <p className="w-screen h-auto px-4 font-sans text-xl font-bold text-center text-white sm:text-3xl">{timeMissing}</p>
     </main>
   )
 }

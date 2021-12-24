@@ -9,7 +9,7 @@ export default function Home() {
     const month = date.getMonth()
     const day = date.getDate()
 
-    if(month === 11 && day === 25) {
+    if(month === 11 && (day === 25 || day === 24)) {
       setIsChristmas(true)
     } else {
       setIsChristmas(false)
@@ -29,7 +29,7 @@ export default function Home() {
     const christmasDate = new Date(date.getFullYear(), 11, 25, 0, 0, 0, 0);
     let timeDiff = christmasDate.getTime() - date.getTime();
     if(timeDiff < 0) {
-      timeDiff+= 86400000;
+      timeDiff+= (1000 * 60 * 60 * 24 * 30 * 12);
     }
     const months = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30));
     const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) - months * 30;
@@ -37,7 +37,7 @@ export default function Home() {
     const minutes = Math.floor(timeDiff / (1000 * 60)) - months * 30 * 24 * 60 - days * 24 * 60 - hours * 60;
     const seconds = Math.floor(timeDiff / 1000) - months * 30 * 24 * 60 * 60 - days * 24 * 60 * 60 - hours * 60 * 60 - minutes * 60;
 
-    if(days === 0) {
+    if((days === 0 && months === 0) || (days == 29 && months === 11)) {
       return "It's Christmas!! 🎉🎉🎉"
     }
 
@@ -45,7 +45,7 @@ export default function Home() {
   }
 
   return (
-    <main className="grid w-screen h-screen bg-red-600 place-content-center">
+    <main className={`grid w-screen h-screen ${isChristmas ? "bg-green-600" :"bg-red-600"} place-content-center`}>
         <h1 className="w-screen font-sans text-3xl font-bold text-center text-white sm:text-9xl">{isChristmas ? 'Yes!' : 'No.'}</h1>
         <p className="w-screen h-auto px-4 font-sans text-xl font-bold text-center text-white sm:text-3xl">{timeMissing}</p>
     </main>

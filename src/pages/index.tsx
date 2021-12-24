@@ -42,7 +42,7 @@ export default function Home() {
     if(days == 29 && months === 11) {
       return "It's Christmas!! 🎉🎉🎉"
     } else if(days === 0 && months === 0) {
-      return `It's Christmas eve!! 🎉🎉🎉
+      return `It's Christmas Eve!! 🎉🎉🎉
       ${months} months, ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`
     }
 
